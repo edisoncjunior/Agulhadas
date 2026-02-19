@@ -41,16 +41,21 @@ DRY_RUN = False      # True = simula | False = envia ordem real
 FILTER_SYMBOLS = True  # True = filtra | False = envia tudo
 
 USE_BINANCE = os.getenv("USE_BINANCE", "false").lower() == "true" # permite desligar Binance sem mexer no código
-
+binance_client = None  # inicializa como None
 if USE_BINANCE:
+    print("🔵 Binance habilitada")
+
+    if not BINANCE_API_KEY or not BINANCE_API_SECRET:
+        raise RuntimeError("Chaves da Binance não definidas")
+
     binance_client = Client(
         BINANCE_API_KEY,
         BINANCE_API_SECRET,
         {"timeout": 30}
     )
-else:
-    binance_client = None
 
+else:
+    print("🟡 Binance desabilitada (modo Telegram apenas)")
 
 # -------------------------------------------------
 # Validações obrigatórias
@@ -79,9 +84,9 @@ telegram_client = TelegramClient(
 # =========================
 # BINANCE CLIENT
 # =========================
-binance_client = Client(BINANCE_API_KEY, BINANCE_API_SECRET, {"timeout": 30})
-if not os.getenv("BINANCE_API_KEY") or not os.getenv("BINANCE_API_SECRET"):
-    raise RuntimeError("BINANCE_API_KEY ou BINANCE_API_SECRET não definidos")
+# binance_client = Client(BINANCE_API_KEY, BINANCE_API_SECRET, {"timeout": 30})
+# if not os.getenv("BINANCE_API_KEY") or not os.getenv("BINANCE_API_SECRET"):
+#    raise RuntimeError("BINANCE_API_KEY ou BINANCE_API_SECRET não definidos")
 
 
 # -------------------------------------------------
