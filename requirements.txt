@@ -1,6 +1,8 @@
 telethon
-python-dotenv
+python-binance
+ccxt
 pandas
 numpy
+python-dotenv
 requests
 websocket-client
