@@ -2,7 +2,9 @@
 *.session
 __pycache__/
 logs/
-
+antigos/
+appAgulhadas.py
 Agulhadas.py
+executorws.py
 AgulhadasRailway.txt
 
