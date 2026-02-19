@@ -218,3 +218,7 @@ if __name__ == "__main__":
             print("🟡 Binance desligada — executor não iniciado")
 
         asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Encerrado manualmente.")
+    except Exception as e:
+        print(f"Erro fatal: {e}")
