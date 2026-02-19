@@ -300,6 +300,11 @@ def on_message(ws, message):
 # 🔢 Sincronizar estado
 # ==========================================================
 def sincronizar_estado_inicial():
+
+    if not USE_BINANCE or not binance_client:
+        print("🟡 Sincronização ignorada (Binance desabilitada)")
+        return
+
     positions = binance_client.futures_position_information()
 
     for p in positions:

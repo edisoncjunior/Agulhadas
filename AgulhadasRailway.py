@@ -210,14 +210,11 @@ async def main():
 # -------------------------------------------------
 if __name__ == "__main__":
     try:
-        sincronizar_estado_inicial()   # 1️⃣ primeiro carrega estado atual via REST
-        iniciar_listener_ws()          # 2️⃣ depois começa a escutar eventos
-        time.sleep(3)                  # 3️⃣ pequena espera para conectar
-        asyncio.run(main())            # 4️⃣ inicia executor
-    except KeyboardInterrupt:
-        print("\n[INFO] Bot encerrado pelo usuário.")
+        if USE_BINANCE:
+            sincronizar_estado_inicial()
+            iniciar_listener_ws()
+            time.sleep(3)
+        else:
+            print("🟡 Binance desligada — executor não iniciado")
 
-
-
-
-
+        asyncio.run(main())
