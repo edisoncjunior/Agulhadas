@@ -1,0 +1,8 @@
+﻿.env
+*.session
+__pycache__/
+logs/
+
+Agulhadas.py
+AgulhadasRailway.txt
+

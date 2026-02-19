@@ -1,0 +1,6 @@
+telethon
+python-dotenv
+pandas
+numpy
+requests
+websocket-client
