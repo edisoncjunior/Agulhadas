@@ -20,7 +20,7 @@ import requests
 import threading
 import websocket
 import json
-
+from binance.client import Client
 from datetime import datetime
 from collections import defaultdict
 from structured_logger import log_event
@@ -383,10 +383,11 @@ def preco_permitido(symbol):
 # 📊 MM8
 # ==========================================================
 TF_MAP = {
-    "15m": binance_client.KLINE_INTERVAL_15MINUTE,
-    "1h": binance_client.KLINE_INTERVAL_1HOUR,
-    "4h": binance_client.KLINE_INTERVAL_4HOUR
+    "15m": Client.KLINE_INTERVAL_15MINUTE,
+    "1h": Client.KLINE_INTERVAL_1HOUR,
+    "4h": Client.KLINE_INTERVAL_4HOUR
 }
+
 
 def calcular_mm8(symbol, timeframe):
     klines = binance_client.futures_klines(
