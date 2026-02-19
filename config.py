@@ -27,19 +27,19 @@ except ImportError:
 # Variáveis de ambiente (obrigatórias)
 # -------------------------------------------------
 # Telegram
-API_ID = int(os.environ.get("API_ID", 0))
+API_ID = int(os.environ.get("API_ID"))
 API_HASH = os.environ.get("API_HASH")
 SESSION_STRING = os.environ.get("TELEGRAM_SESSION_STRING")
-SOURCE_CHAT_ID = int(os.environ.get("SOURCE_CHAT_ID", 0))
-TARGET_CHAT_ID = int(os.environ.get("TARGET_CHAT_ID", 0))
+SOURCE_CHAT_ID = int(os.environ.get("SOURCE_CHAT_ID"))
+TARGET_CHAT_ID = int(os.environ.get("TARGET_CHAT_ID"))
 
 # Binance
 BINANCE_API_KEY = os.environ.get("BINANCE_API_KEY")
 BINANCE_API_SECRET = os.environ.get("BINANCE_API_SECRET")
 
-#MEXC
-# MEXC_API_KEY = os.environ.get("MEXC_API_KEY")
-# MEXC_API_SECRET = os.environ.get("MEXC_API_SECRET")
+USE_BINANCE = os.getenv("USE_BINANCE", "false").lower() == "true" # permite desligar Binance sem mexer no código
+DRY_RUN = False      # True = simula | False = envia ordem real
+FILTER_SYMBOLS = True  # True = filtra | False = envia tudo
 
 # -------------------------------------------------
 # Validações obrigatórias
@@ -74,29 +74,26 @@ if not os.getenv("BINANCE_API_KEY") or not os.getenv("BINANCE_API_SECRET"):
 
 
 # -------------------------------------------------
-# PARÂMETROS FIXOS DA ESTRATÉGIA
+# PARÂMETROS DA ESTRATÉGIA (CONFIGURÁVEIS)
 # -------------------------------------------------
-LEVERAGE = 50
-MAX_USDT = 1.5
-MAX_PRECO_PERMITIDO = 3.10   # seleciona apenas moedas baratas
-MAX_POSICOES_ABERTAS = 8
-MAX_SHORTS = 5
-MAX_LONGS = 3
-MARGIN_TYPE = "CROSSED"
-HEDGE_MODE = True
-DRY_RUN = False      # True = simula | False = envia ordem real
-USE_BINANCE = True # permite desligar Binance sem mexer no código
+
+LEVERAGE = int(os.getenv("LEVERAGE", 50))
+MAX_USDT = float(os.getenv("MAX_USDT", 1.5))
+MAX_PRECO_PERMITIDO = float(os.getenv("MAX_PRECO_PERMITIDO", 2.10)) # seleciona apenas moedas baratas
+MAX_POSICOES_ABERTAS = int(os.getenv("MAX_POSICOES_ABERTAS", 8))
+MAX_SHORTS = int(os.getenv("MAX_SHORTS", 5))
+MAX_LONGS = int(os.getenv("MAX_LONGS", 3))
+MARGIN_TYPE = os.getenv("MARGIN_TYPE", "CROSSED")
+HEDGE_MODE = os.getenv("HEDGE_MODE", "true").lower() == "true"
 
 # SL e TP
-TP_PARCIAL_PERCENT = 1.0       # multiplicado pela alavancagem (1.0 com 25X = 25%)
-TP_PARCIAL_QTY = 0.5           # retirada parcial de moedas (0.5 = 50%)
-BREAK_EVEN = 1.1               # coloca SL próximo preço entrada em (0.01 = 1%)
+TP_PARCIAL_PERCENT = float(os.getenv("TP_PARCIAL_PERCENT", 1.0))  # multiplicado pela alavancagem (1.0 com 25X = 25%)
+TP_PARCIAL_QTY = float(os.getenv("TP_PARCIAL_QTY", 0.5)) # retirada parcial de moedas (0.5 = 50%)
 
-# TRAILING STOP
-TRAILING_CALLBACK_RATE = 1.0      # percentual (1.0 = 1%)
-TRAILING_ACTIVATION_PERCENT = 5.0 # 1% de variação do preço (equivale a 25% considerando 25x)
 
-FILTER_SYMBOLS = True  # True = filtra | False = envia tudo
+# Trailing
+TRAILING_CALLBACK_RATE = float(os.getenv("TRAILING_CALLBACK_RATE", 1.0)) # percentual (1.0 = 1%)
+TRAILING_ACTIVATION_PERCENT = float(os.getenv("TRAILING_ACTIVATION_PERCENT", 5.0)) # 1% de variação do preço (equivale a 25% considerando 25x)
 
 ALLOWED_SYMBOLS = {
     "1INCHUSDT", "ADAUSDT", "ALGOUSDT", "ALICEUSDT", "APEUSDT", "APTUSDT", "ARBUSDT", 
