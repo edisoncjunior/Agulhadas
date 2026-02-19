@@ -37,9 +37,20 @@ TARGET_CHAT_ID = int(os.environ.get("TARGET_CHAT_ID"))
 BINANCE_API_KEY = os.environ.get("BINANCE_API_KEY")
 BINANCE_API_SECRET = os.environ.get("BINANCE_API_SECRET")
 
-USE_BINANCE = os.getenv("USE_BINANCE", "false").lower() == "true" # permite desligar Binance sem mexer no código
 DRY_RUN = False      # True = simula | False = envia ordem real
 FILTER_SYMBOLS = True  # True = filtra | False = envia tudo
+
+USE_BINANCE = os.getenv("USE_BINANCE", "false").lower() == "true" # permite desligar Binance sem mexer no código
+
+if USE_BINANCE:
+    binance_client = Client(
+        BINANCE_API_KEY,
+        BINANCE_API_SECRET,
+        {"timeout": 30}
+    )
+else:
+    binance_client = None
+
 
 # -------------------------------------------------
 # Validações obrigatórias
